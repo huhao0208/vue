@@ -1,26 +1,21 @@
+/* eslint-disable no-unused-vars */
 // 导入axios
 import axios from "axios";
-
-import { Toast } from "vant";
+import Vue from "vue";
+import Qs from "qs";
 //1. 创建新的axios实例，
 const service = axios.create({
   // 公共接口
-  baseURL: process.env.BASE_API,
+  baseURL: process.env.VUE_APP_BASE_API,
   // 超时时间 单位是ms，这里设置了10s的超时时间
   timeout: 10 * 1000
 });
 // 2.请求拦截器
 service.interceptors.request.use(
   config => {
-    //发请求前做的一些处理，数据转化，配置请求头，设置token,设置loading等
-    // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
-    config.data = JSON.stringify(config.data);
     config.headers = {
       "Content-Type": "application/x-www-form-urlencoded"
     };
-    // if(token){
-    //   config.params = {'token':token}
-    // }
     return config;
   },
   error => {
@@ -31,9 +26,13 @@ service.interceptors.request.use(
 // 3.响应拦截器
 service.interceptors.response.use(
   response => {
+    Vue.$loading.hide();
     //接收到响应数据并成功后的一些共有的处理，关闭loading等
-
-    return response;
+    if (response.data.status !== 200) {
+      Vue.$toast(response.data.description, "fail");
+      return;
+    }
+    return response.data.body;
   },
   error => {
     /***** 接收到异常响应的处理开始 *****/
@@ -84,16 +83,42 @@ service.interceptors.response.use(
     } else {
       // 超时处理
       if (JSON.stringify(error).includes("timeout")) {
-        Toast.error("服务器响应超时，请刷新当前页");
+        error.message = "服务器响应超时，请刷新当前页";
+      } else {
+        error.message = "连接服务器失败";
       }
-      Toast("连接服务器失败");
     }
-
-    Toast.error(error.message);
+    Vue.$toast(error.message, "error");
+    // Toast.error(error.message);
     /***** 处理结束 *****/
     //如果不需要错误处理，以上的处理过程都可省略
     return Promise.resolve(error.response);
   }
 );
-//4.导入文件
+
+//4.导出文件
+const http = (url, methods = "get", data = {}) => {
+  if (data.showLoading) {
+    //  console.log("显示loading");
+    Vue.$loading.show();
+    delete data.showLoading;
+  }
+  let method = methods.toLocaleUpperCase();
+  method === "GET" || method === "DELETE"
+    ? (url = url + "?" + Qs.stringify(data))
+    : "";
+  let params = {
+    method,
+    url,
+    data
+  };
+
+  return service(params);
+};
+
+const get = (url, data) => http(url, "get", data);
+const post = (url, data) => http(url, "post", data);
+
+Vue.prototype.$get = get;
+Vue.prototype.$post = post;
 export default service;

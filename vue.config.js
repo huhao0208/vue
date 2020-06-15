@@ -8,7 +8,7 @@ module.exports = {
     hotOnly: false, //热模块更新，添加新模块会有更好的配置
     proxy: {
       "/api": {
-        target: "http://locahost:8080",
+        target: "http://localhost:8080",
         ws: true,
         changeOrigin: true,
         pathRewrite: {

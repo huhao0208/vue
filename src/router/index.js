@@ -21,6 +21,11 @@ const routes = [
       { path: "/information", name: "information", component: Index },
       { path: "/my", name: "my", component: Index }
     ]
+  },
+  {
+    path: "*",
+    name: "404",
+    component: () => import("@/views/NoFound.vue")
   }
 ];
 

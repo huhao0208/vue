@@ -1,20 +1,28 @@
 <template>
   <div class="home">
     <router-view />
-    <van-tabbar v-model="active">
-      <van-tabbar-item replace to="/index" icon="home-o">首页</van-tabbar-item>
-      <van-tabbar-item replace to="/house" icon="search">找房</van-tabbar-item>
-      <van-tabbar-item replace to="/information" icon="friends-o"
-        >咨询</van-tabbar-item
+    <van-tabbar v-model="active" safe-area-inset-bottom border>
+      <van-tabbar-item
+        v-for="(item, index) in tabarList"
+        :key="index"
+        replace
+        :to="{ path: item.path }"
       >
-      <van-tabbar-item replace to="/my" icon="setting-o">我的</van-tabbar-item>
+        <template #icon="props">
+          <i
+            :class="
+              'iconfont icon-' + item.icon + (props.active ? ' active' : '')
+            "
+          />
+        </template>
+        {{ item.title }}
+      </van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-
 import { Grid, GridItem, Button, Tabbar, TabbarItem } from "vant";
 export default {
   name: "Home",
@@ -27,11 +35,33 @@ export default {
   },
   data() {
     return {
-      active: 0
+      active: 0,
+      tabarList: [
+        { path: "/index", title: "首页", icon: "ind" },
+        { path: "/house", title: "找房", icon: "findHouse" },
+        { path: "/information", title: "咨询", icon: "infom" },
+        { path: "/my", title: "我的", icon: "my" }
+      ]
     };
   },
+  created() {
+    // 页面初始选中的
+    let index = this.tabarList.findIndex(
+      item => item.path === this.$route.path
+    );
+    this.active = index;
+  },
+  mounted() {},
   methods: {}
 };
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+.van-tabbar {
+  height: 100px;
+  background: rgba(222, 222, 222, 0.2);
+  .iconfont {
+    font-size: 40px;
+  }
+}
+</style>

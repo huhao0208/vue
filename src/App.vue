@@ -3,7 +3,14 @@
     <router-view />
   </div>
 </template>
-
+<script>
+export default {
+  data() {
+    return {};
+  },
+  mounted() {}
+};
+</script>
 <style lang="less">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -11,18 +18,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  touch-action: none; // 阻止触摸浏览器报错
+  p {
+    margin: 0;
+    padding: 0;
   }
 }
 </style>

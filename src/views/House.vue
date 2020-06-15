@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: "house",
   props: {},
   data() {
     return {};
@@ -19,4 +20,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="less"></style>

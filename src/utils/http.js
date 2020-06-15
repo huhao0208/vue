@@ -20,6 +20,7 @@ service.interceptors.request.use(
   },
   error => {
     Promise.reject(error);
+    return false;
   }
 );
 
@@ -30,11 +31,12 @@ service.interceptors.response.use(
     //接收到响应数据并成功后的一些共有的处理，关闭loading等
     if (response.data.status !== 200) {
       Vue.$toast(response.data.description, "fail");
-      return;
+      return Promise.reject("error");
     }
     return response.data.body;
   },
   error => {
+    //  Vue.$loading.hide();
     /***** 接收到异常响应的处理开始 *****/
     if (error && error.response) {
       // 1.公共错误处理
@@ -51,7 +53,7 @@ service.interceptors.response.use(
           break;
         case 404:
           error.message = "请求错误,未找到该资源";
-          window.location.href = "/NotFound";
+          //  window.location.href = "/NotFound";
           break;
         case 405:
           error.message = "请求方法未允许";
@@ -92,7 +94,7 @@ service.interceptors.response.use(
     // Toast.error(error.message);
     /***** 处理结束 *****/
     //如果不需要错误处理，以上的处理过程都可省略
-    return Promise.resolve(error.response);
+    Promise.reject(error.response);
   }
 );
 

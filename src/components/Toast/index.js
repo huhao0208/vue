@@ -30,6 +30,7 @@ let ToastC = (title, type, duration = 1.5) => {
   }, duration * 1000);
 };
 ToastC.install = Vue => {
+  if (Vue.$loading) Vue.$loading.hide();
   if (!Vue.$toast) {
     Vue.$toast = ToastC;
   }

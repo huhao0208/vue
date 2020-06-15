@@ -101,7 +101,7 @@ export default {
   methods: {
     // 获取轮播图
     async getSwiper() {
-      this.imgsData = await this.$get("/home/swiper", {
+      this.imgsData = await this.$get("/home/swiper1", {
         showLoading: true
       });
     },

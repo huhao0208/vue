@@ -71,6 +71,7 @@ export default {
         address += e.addressComponent.street;
         address += e.addressComponent.streetNumber;
         console.log("当前定位地址为：" + address);
+        alert(address);
       });
       geolocationControl.addEventListener("locationError", function(e) {
         // 定位失败事件

@@ -35,14 +35,14 @@ export default {
 <style scoped lang="less">
 .toast {
   text-align: center;
-  padding: 20px 10px;
+  padding: 10px 5px;
   color: #fff;
-  font-size: 25px;
-  max-width: 200px;
-  min-width: 160px;
+  font-size: 13px;
+  max-width: 100px;
+  min-width: 80px;
   background: rgba(100, 100, 100, 0.9);
   position: fixed;
-  border-radius: 10px;
+  border-radius: 5px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -55,7 +55,7 @@ export default {
     -webkit-box-orient: vertical;
   }
   .van-icon {
-    font-size: 80px;
+    font-size: 40px;
   }
 }
 </style>

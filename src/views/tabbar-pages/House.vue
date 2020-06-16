@@ -1,6 +1,12 @@
 <template>
   <div>
-    house
+    <Navbar
+      :search="true"
+      title="订单"
+      @onSearch="onSearch"
+      defaultValue="11111"
+    >
+    </Navbar>
   </div>
 </template>
 
@@ -13,9 +19,11 @@ export default {
   },
   computed: {},
   created() {},
-  mounted() {},
-  watch: {},
-  methods: {},
+  methods: {
+    onSearch(e) {
+      console.log(e);
+    }
+  },
   components: {}
 };
 </script>

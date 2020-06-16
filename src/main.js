@@ -1,20 +1,16 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "./utils/http.js";
-import "@/assets/fonts/iconfont.css";
+import "./assets/fonts/iconfont.css";
 import router from "./router";
 import fastclick from "fastclick";
 //将根据已有的meta标签来设置缩放比例，否则会自动在html的head中添加一个meta name="viewport"的标签，同时会自动设置html的font-size为屏幕宽度除以10，也就是1rem等于html根节点的font-size）。
 import "lib-flexible/flexible";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { Lazyload } from "vant"; // 必须单独引入
 
-import Loading from "@/components/loading/index.js"; // 自定义loading 使用时通过this.$loading.show() $loading.hide()
-import Toast from "@/components/Toast/index.js";
-Vue.use(Lazyload)
-  .use(Loading)
-  .use(Toast);
+// 引入全局组件
+import "@/utils/globalComponents";
 
 // 加载进度条配置
 NProgress.configure({

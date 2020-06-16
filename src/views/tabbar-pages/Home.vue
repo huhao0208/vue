@@ -58,10 +58,14 @@ export default {
 
 <style lang="less">
 .van-tabbar {
-  height: 100px;
-  background: rgba(222, 222, 222, 0.2);
+  height: 50px;
+  border-top: 0.5px solid #eee;
+  background: rgb(250, 249, 249);
   .iconfont {
-    font-size: 40px;
+    font-size: 20px;
   }
+}
+.home {
+  padding-bottom: 50px;
 }
 </style>

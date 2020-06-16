@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Index from "../views/Index.vue";
+import Home from "../views/tabbar-pages/Home.vue";
+import Index from "../views/tabbar-pages/Index.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -16,12 +16,30 @@ const routes = [
         path: "/house",
         name: "house",
         component: () =>
-          import(/* webpackChunkName: "house" */ "@/views/House.vue")
+          import(
+            // 区分打包
+            /* webpackChunkName: "house" */ "@/views/tabbar-pages/House.vue"
+          )
       },
       { path: "/information", name: "information", component: Index },
       { path: "/my", name: "my", component: Index }
     ]
   },
+  {
+    path: "/citylist",
+    name: "citylist",
+    component: () =>
+      import(
+        /*webpackChunkName:"citylist" */ "@/views/house-pages/CityList.vue"
+      )
+  },
+  {
+    path: "/map",
+    name: "map",
+    component: () =>
+      import(/*webpackChunkName:"map" */ "@/views/house-pages/Map.vue")
+  },
+
   {
     path: "*",
     name: "404",

@@ -1,18 +1,20 @@
 import Toast from "./Toast.vue";
 import Vue from "vue";
 // 将组建挂载到vue上
-const toastContrustor = Vue.extend(Toast);
+const toastConstructor = Vue.extend(Toast);
 // 声明构造函数的变量 定时器变量
 let instance;
 let timer = null;
 let ToastC = (title, type, duration = 1.5) => {
   // console.log(options);
   if (!instance) {
-    instance = new toastContrustor();
+    instance = new toastConstructor();
     instance.vm = instance.$mount();
     document.body.appendChild(instance.vm.$el);
   }
-
+  instance.show = false;
+  clearTimeout(timer);
+  instance.show = true;
   // if (typeof options === "string") {
   //   instance.title = options;
   // } else if (typeof options === "object") {

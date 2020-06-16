@@ -1,7 +1,9 @@
 <template>
-  <div class="loading_bg" :hidden="!show">
-    <van-loading type="spinner" color="#1989fa">{{ title }}</van-loading>
-  </div>
+  <transition name="slide-fade">
+    <div class="loading_bg" v-show="show">
+      <van-loading type="spinner" color="#1989fa">{{ title }}</van-loading>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -25,14 +27,14 @@ export default {
 .loading_bg {
   width: 100vw;
   height: 100vh;
-  background: #fff;
+  background: transparent;
   position: fixed;
   top: 0;
   left: 0;
 }
 .van-loading {
   // width: 80px;
-  height: 70px;
+  height: 35px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -43,7 +45,7 @@ export default {
     height: 100%;
   }
   .van-loading__text {
-    margin-top: 10px;
+    margin-top: 5px;
   }
 }
 </style>

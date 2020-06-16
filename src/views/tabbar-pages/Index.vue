@@ -1,14 +1,16 @@
 <template>
   <div>
+    <!-- 顶部搜索栏 -->
+    <Navbar search></Navbar>
     <!-- 轮播图 -->
     <van-swipe
       class="my-swipe"
       :autoplay="3000"
       indicator-color="white"
-      v-if="imgsData.length"
+      lazy-render
     >
       <van-swipe-item v-for="(item, index) in imgsData" :key="index">
-        <img v-lazy="$IMG + item.imgSrc" />
+        <van-image fit="fill" :lazy-load="false" :src="$IMG + item.imgSrc" />
       </van-swipe-item>
     </van-swipe>
     <!-- nav 导航 -->
@@ -43,19 +45,34 @@
         </van-grid-item>
       </van-grid>
     </div>
+
+    <!-- 最新资讯 -->
+    <div class="group news">
+      <div class="title">
+        <h3>最新资讯</h3>
+        <span>更多</span>
+      </div>
+
+      <div class="news_card" v-for="item in newsList" :key="item.id">
+        <img :src="$IMG + item.imgSrc" alt="" />
+        <div class="right">
+          <h4>{{ item.title }}</h4>
+          <div class="bottom">
+            <span>{{ item.from }}</span> <span>{{ item.date }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { Swipe, SwipeItem, Image, Grid, GridItem } from "vant";
+import { Swipe, SwipeItem } from "vant";
 export default {
   name: "index",
   components: {
     [Swipe.name]: Swipe,
-    [Image.name]: Image,
-    [SwipeItem.name]: SwipeItem,
-    [Grid.name]: Grid,
-    [GridItem.name]: GridItem
+    [SwipeItem.name]: SwipeItem
   },
   props: {},
   data() {
@@ -88,27 +105,44 @@ export default {
           path: "/house"
         }
       ],
-      groupList: []
+      groupList: [],
+      newsList: []
     };
   },
   computed: {},
   created() {
     this.getSwiper();
     this.getGroupList();
+    this.getNews();
+    console.log("created");
   },
-  mounted() {},
+  mounted() {
+    console.log("mouted");
+  },
+  activated() {
+    // 数据更新放这里
+    console.log("activated");
+  },
   watch: {},
   methods: {
     // 获取轮播图
     async getSwiper() {
-      this.imgsData = await this.$get("/home/swiper1", {
+      this.imgsData = await this.$get("/home/swiper", {
         showLoading: true
       });
     },
     // 获取租房小组数组
     async getGroupList() {
       this.groupList = await this.$get("/home/groups", {
-        area: "AREA|88cff55c-aaa4-e2e0"
+        area: "AREA|88cff55c-aaa4-e2e0",
+        showLoading: true
+      });
+    },
+    // 最新资讯
+    async getNews() {
+      this.newsList = await this.$get("/home/news", {
+        area: "AREA|88cff55c-aaa4-e2e0",
+        showLoading: true
       });
     }
   }
@@ -116,19 +150,32 @@ export default {
 </script>
 
 <style scoped lang="less">
-.my-swipe .van-swipe-item {
-  color: #fff;
-  width: 750px;
-  height: 414px;
-  background-color: #39a9ed;
-  img {
-    width: 100%;
-    height: 100%;
+.home .nav_bar {
+  position: absolute;
+  // position: sticky;
+  // top: -50px;
+  background: transparent;
+}
+.my-swipe {
+  margin-top: -50px;
+  width: 375px;
+  height: 207px;
+  background-color: rgba(148, 197, 243, 0.363);
+  .van-swipe-item {
+    color: #fff;
+    width: 375px;
+    height: 207px;
+    line-height: 207px;
+    background-color: rgba(148, 197, 243, 0.363);
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 .nav {
   img {
-    width: 96px;
+    width: 48px;
   }
 }
 
@@ -138,12 +185,12 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 15px;
+    padding: 0 7px;
   }
   .group_nav {
     /deep/ .van-grid-item__content {
       background-color: inherit;
-      padding: 0 20px 20px;
+      padding: 0 10px 10px;
     }
     /deep/ .van-grid-item:nth-child(2n) {
       .van-grid-item__content {
@@ -157,15 +204,15 @@ export default {
       flex-direction: row;
       align-items: center;
       img {
-        width: 110px;
-        height: 110px;
+        width: 55px;
+        height: 55px;
         border-radius: 50%;
-        margin: 20px;
+        margin: 10px;
       }
       .left {
         flex: 1;
         h4 {
-          padding-bottom: 10px;
+          padding-bottom: 5px;
           margin: 0;
         }
       }
@@ -185,5 +232,34 @@ export default {
   //     flex: 1;
   //   }
   // }
+}
+.news {
+  background: #fff;
+  .news_card {
+    display: flex;
+    padding: 10px;
+    border-bottom: 0.5px solid #eee;
+    img {
+      width: 120px;
+      margin-right: 10px;
+    }
+    .right {
+      flex: 1;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      h4 {
+        margin: 0;
+        font-size: 14px;
+      }
+      .bottom {
+        display: flex;
+        justify-content: space-between;
+        color: #9c9fa1;
+        font-size: 12px;
+      }
+    }
+  }
 }
 </style>

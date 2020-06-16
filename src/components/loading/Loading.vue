@@ -1,7 +1,7 @@
 <template>
-  <transition name="slide-fade">
-    <div class="loading_bg" v-show="show">
-      <van-loading type="spinner" color="#1989fa">{{ title }}</van-loading>
+  <transition name="fade">
+    <div class="loading_bg" v-if="show">
+      <van-loading type="spinner" color="#01f9ff">{{ title }}</van-loading>
     </div>
   </transition>
 </template>
@@ -27,10 +27,11 @@ export default {
 .loading_bg {
   width: 100vw;
   height: 100vh;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.4);
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
 }
 .van-loading {
   // width: 80px;
@@ -45,7 +46,19 @@ export default {
     height: 100%;
   }
   .van-loading__text {
-    margin-top: 5px;
+    margin: 10px 0;
+    max-width: 90px;
+    text-align: center;
+    color: #999;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.7s;
+  }
+  .fade-enter,
+   .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 }
 </style>

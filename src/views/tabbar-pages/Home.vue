@@ -58,6 +58,7 @@ export default {
 
 <style lang="less">
 .van-tabbar {
+  z-index: 999;
   height: 50px;
   border-top: 0.5px solid #eee;
   background: rgb(250, 249, 249);

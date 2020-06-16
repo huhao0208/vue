@@ -20,6 +20,8 @@ const loading = {
   hide() {
     // 隐藏方法
     instance.show = false;
+    if (!instance.title) return;
+    delete instance.title;
   }
 };
 export default {

@@ -3,9 +3,9 @@
     <Navbar>城市选择</Navbar>
     <van-index-bar :index-list="indexList">
       <div v-for="item in indexList" :key="item">
-        <van-index-anchor :index="item">
-          {{ item | formatIndex }}</van-index-anchor
-        >
+        <van-index-anchor :index="item">{{
+          item | formatIndex
+        }}</van-index-anchor>
         <div
           class="city_item"
           v-for="it in list[item]"
@@ -21,6 +21,7 @@
 
 <script>
 import { IndexBar, IndexAnchor } from "vant";
+let canSelectList = [];
 export default {
   name: "citylist",
   props: {},
@@ -37,7 +38,10 @@ export default {
     this.getCityList();
     this.getHotList();
   },
-  mounted() {},
+  mounted() {
+    // 获取有房源城市列表
+    this.getHasList();
+  },
   methods: {
     async getCityList() {
       const cityList = await this.$get("/area/city", { level: 1 });
@@ -58,9 +62,15 @@ export default {
       this.$set(this.list, "热", hotList);
     },
     select(e) {
+      // 判断是否有房源
+      let res = canSelectList.findIndex(item => item.value == e.value);
+      if (res === -1) return this.$toast("当前城市暂无房源信息");
       localStorage.setItem("city", JSON.stringify(e));
       this.$toast("选择成功", "success", 0.6);
       this.$router.go(-1);
+    },
+    async getHasList() {
+      canSelectList = await this.$get("/area/hot");
     }
   },
   components: {

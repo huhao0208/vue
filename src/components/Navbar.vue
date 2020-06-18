@@ -11,15 +11,18 @@
         @input="onChange"
         placeholder="请输入搜索关键词"
         @search="onSearch"
-      >
-      </van-search>
+      ></van-search>
     </div>
     <h2 v-else class="center title">
-      <slot>{{ title ? title : "" }} </slot>
+      <slot>{{ title ? title : "" }}</slot>
     </h2>
     <div class="right">
-      <i v-if="search" class="iconfont icon-map"></i>
-      <slot name="right"> </slot>
+      <i
+        v-if="search"
+        class="iconfont icon-map"
+        @click="() => this.$router.push('/map')"
+      ></i>
+      <slot name="right"></slot>
     </div>
   </div>
 </template>

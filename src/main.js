@@ -8,7 +8,7 @@ import fastclick from "fastclick";
 import "lib-flexible/flexible";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-
+import "@vant/touch-emulator"; // van组件适配桌面端
 // 引入全局组件
 import "@/utils/globalComponents";
 

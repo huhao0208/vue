@@ -16,7 +16,7 @@
     <!-- nav 导航 -->
     <van-grid :border="false" :column-num="4" class="nav" clickable center>
       <van-grid-item v-for="item in navs" :key="item.id" :to="item.path">
-        <img :src="item.img" alt="" />
+        <img :src="item.img" alt />
         <p>{{ item.title }}</p>
       </van-grid-item>
     </van-grid>
@@ -40,7 +40,7 @@
               <h4>{{ item.title }}</h4>
               <p>{{ item.desc }}</p>
             </div>
-            <img :src="$IMG + item.imgSrc" alt="" />
+            <img :src="$IMG + item.imgSrc" alt />
           </div>
         </van-grid-item>
       </van-grid>
@@ -54,11 +54,12 @@
       </div>
 
       <div class="news_card" v-for="item in newsList" :key="item.id">
-        <img :src="$IMG + item.imgSrc" alt="" />
+        <img :src="$IMG + item.imgSrc" alt />
         <div class="right">
           <h4>{{ item.title }}</h4>
           <div class="bottom">
-            <span>{{ item.from }}</span> <span>{{ item.date }}</span>
+            <span>{{ item.from }}</span>
+            <span>{{ item.date }}</span>
           </div>
         </div>
       </div>
@@ -158,18 +159,18 @@ export default {
 }
 .my-swipe {
   margin-top: -50px;
-  width: 375px;
-  height: 207px;
+  width: 100vw;
+  height: 60vw;
   background-color: rgba(148, 197, 243, 0.363);
   .van-swipe-item {
     color: #fff;
-    width: 375px;
-    height: 207px;
+    width: 100%;
+    //  height: 207px;
     line-height: 207px;
     background-color: rgba(148, 197, 243, 0.363);
-    img {
-      width: 100%;
-      height: 100%;
+    .van-image {
+      width: 100vw;
+      height: 60vw;
     }
   }
 }
